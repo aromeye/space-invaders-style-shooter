@@ -1,5 +1,4 @@
 from pygame import *
-#from time import time
 from random import randint
 init()
 WIDTH, HEIGHT = 1000, 850
@@ -8,12 +7,14 @@ BACKGROUND = transform.scale(image.load('alpes.png'), (WIDTH, HEIGHT))
 ROCKET_IMG = "use_bullet.png"
 ENEMY_IMG = "NAVE_TRANSPARENTE.png"
 PLAYER_IMG = 'NAVE_2_TRANSPARENTE.png'
+#used images ^
 
-#imagenes por si acaso
+#imagenes, por si acaso (images, just in case) 
 CAT = 'gato.png'
 STONE = 'stone.png'
 WOOD = 'tf2_wood_texture'
 WIN_SCREEN = transform.scale(image.load('gato.png'), (WIDTH, HEIGHT))
+#i just dint wanna loose theese lol ^
 
 VICTORY_CONDITION = 20
 VICTORY_COLOR = 0, 0, 0
@@ -26,10 +27,6 @@ EXPLOSION_SIZE = 90
 Ammo_type = 'normal'
 
 
-#font.init()
-#font = pygame.font.Font(None, 36)
-#text_surface = font.render("FUCK YOU (not realy lol)", True, (255, 255, 255))
-#text_rect = text_surface.get_rect(center=(45, 45))
 
 run = True
 
@@ -87,7 +84,7 @@ class Ammo(GameSprite):
     def update(self):
         self.rect.y += randint(-5, self.speed)
 
-class Bombs(GameSprite): #basicamente un temporizador xddddddddddddd
+class Bombs(GameSprite): #basicamente un temporizador (timer, PLEASE tell me a better way do do this,  its a pain)
     def update(self):
         if self.speed >= 0.5:
             self.speed -= 0.5
@@ -101,10 +98,10 @@ class Boolet(GameSprite):
         if self.rect.y <= 0:
             self.kill()
 
-        if Ammo_type != 'afterburn':
-            self.rect.y -= self.speed
-            if self.speed >= 0:
-                self.speed -= (SPEED/40)
+        #if Ammo_type != 'afterburn':             < this is what the "ammo" images are for (if i get around to complete the code)
+        #    self.rect.y -= self.speed
+        #    if self.speed >= 0:
+        #        self.speed -= (SPEED/40)
             
         if Ammo_type == 'normal' and self.speed <= 0:
             bomb = Bombs('explosion.png', EXPLOSION_SIZE,EXPLOSION_SIZE, (self.rect.centerx - EXPLOSION_SIZE/2), (self.rect.y - self.size_y), 5, -1)
@@ -133,8 +130,7 @@ while run:
                 player.shoot()
 
     if not finish:
-        #window.blit(text_surface, text_rect)
-        #pygame.display.flip()
+
         window.blit(BACKGROUND, (0, 0))
         explosions.update()
         explosions.draw(window)
@@ -144,8 +140,8 @@ while run:
         player.move()
         bullets.draw(window)
         bullets.update()
-        colitions = sprite.groupcollide(enemies, bullets, True, True)
-        colitions_2 = sprite.groupcollide(enemies, explosions, True, True)
+        colitions = sprite.groupcollide(enemies, bullets, True, True)                # please tell me how to make singular objects collide with .group objects
+        colitions_2 = sprite.groupcollide(enemies, explosions, True, True)      
         for c in colitions:
             enemy = Enemy(ENEMY_IMG, 65, 80, randint(0, WIDTH - 65), 0, randint(1, 5), 1)
             enemies.add(enemy)
@@ -159,11 +155,6 @@ while run:
         if score == VICTORY_CONDITION:
             finish = True
             window.blit(WIN_SCREEN, (0, 0))
-    #window.blit(text_surface, text_rect)
-    #pygame.display.flip()
     display.update()
     clock.tick(FPS)
 quit()
-
-
-#
