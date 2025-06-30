@@ -81,7 +81,7 @@ class Enemy(GameSprite):
             self.rect.x = randint(0, WIDTH - 65)
 
 class Ammo(GameSprite):
-    def update(self):
+    def update(self):                               # < unused 
         self.rect.y += randint(-5, self.speed)
 
 class Bombs(GameSprite): #basicamente un temporizador (timer, PLEASE tell me a better way do do this,  its a pain)
